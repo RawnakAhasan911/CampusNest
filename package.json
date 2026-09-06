@@ -1,0 +1,15 @@
+{
+  "name": "student-housing-roommate-finder",
+  "version": "1.0.0",
+  "description": "Secure Student Housing & Roommate Finder with From-Scratch Dual Asymmetric Cryptography (RSA + ECC)",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev:backend": "node backend/src/server.js",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "test:crypto": "node backend/test/crypto.test.js"
+  },
+  "keywords": ["student-housing", "roommate-matching", "rsa", "ecc", "pure-cryptography", "zero-library"],
+  "author": "Google Deepmind Antigravity",
+  "license": "MIT"
+}
