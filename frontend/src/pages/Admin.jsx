@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Users, Home, ShieldAlert, Star, KeyRound, RefreshCw,
-  Trash2, Ban, CheckCircle, AlertTriangle, Layers, Plus, ShieldCheck, Cpu
+  Trash2, Ban, CheckCircle, AlertTriangle, Layers, Plus, ShieldCheck, Cpu, CheckCircle2
 } from 'lucide-react';
 import { api } from '../services/api';
 import CryptoBadge from '../components/CryptoBadge';
@@ -236,11 +236,10 @@ export default function Admin() {
             <button
               key={t.id}
               onClick={() => handleTabChange(t.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition whitespace-nowrap ${
-                isActive
-                  ? 'bg-white text-slate-900 shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
-              }`}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition whitespace-nowrap ${isActive
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                }`}
             >
               <Icon className="w-4 h-4" />
               <span>{t.label}</span>
@@ -386,16 +385,14 @@ export default function Admin() {
                     <td className="p-3.5 font-mono text-slate-500">{u.phone || 'N/A'}</td>
                     <td className="p-3.5 text-slate-600">{u.department}</td>
                     <td className="p-3.5">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${
-                        u.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-700'
-                      }`}>
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${u.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-slate-100 text-slate-700'
+                        }`}>
                         {u.role}
                       </span>
                     </td>
                     <td className="p-3.5">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${
-                        u.status === 'active' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
-                      }`}>
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${u.status === 'active' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                        }`}>
                         {u.status}
                       </span>
                     </td>
@@ -403,11 +400,10 @@ export default function Admin() {
                       {u.role !== 'admin' && (
                         <button
                           onClick={() => handleToggleUserStatus(u._id, u.status)}
-                          className={`px-3 py-1 rounded-lg text-xs font-bold transition ${
-                            u.status === 'active'
-                              ? 'bg-rose-50 text-rose-700 hover:bg-rose-100'
-                              : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
-                          }`}
+                          className={`px-3 py-1 rounded-lg text-xs font-bold transition ${u.status === 'active'
+                            ? 'bg-rose-50 text-rose-700 hover:bg-rose-100'
+                            : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+                            }`}
                         >
                           {u.status === 'active' ? 'Suspend' : 'Activate'}
                         </button>
@@ -449,10 +445,9 @@ export default function Admin() {
                     <td className="p-3.5 font-mono font-bold text-slate-900">${l.rent}/mo</td>
                     <td className="p-3.5 text-slate-500">{l.bedrooms}B / {l.bathrooms}BA</td>
                     <td className="p-3.5">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${
-                        l.status === 'available' ? 'bg-emerald-100 text-emerald-800' :
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${l.status === 'available' ? 'bg-emerald-100 text-emerald-800' :
                         l.status === 'rented' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'
-                      }`}>
+                        }`}>
                         {l.status}
                       </span>
                     </td>
@@ -506,9 +501,8 @@ export default function Admin() {
                       <td className="p-3.5 text-rose-700 font-semibold">{r.reason}</td>
                       <td className="p-3.5 text-slate-600 max-w-sm whitespace-pre-line">{r.details || 'No details provided'}</td>
                       <td className="p-3.5">
-                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${
-                          r.status === 'pending' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'
-                        }`}>
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase font-mono ${r.status === 'pending' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'
+                          }`}>
                           {r.status}
                         </span>
                       </td>

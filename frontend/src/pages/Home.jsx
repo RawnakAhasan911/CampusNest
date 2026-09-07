@@ -39,13 +39,15 @@ export default function Home({ setTab, onOpenAuth, onSelectListing, onConnectUse
   }, [isAuthenticated]);
 
   // Demo 1-Click Fast Login
-  async function handleDemoLogin(email, password) {
+  async function handleDemoLogin(email, password, roleHint = 'student') {
     setQuickLoginLoading(true);
     try {
       const step1 = await login(email, password);
       if (step1.requires2FA && step1.demoOtp) {
         // Complete 2FA with demo OTP
-        await complete2FA(step1.tempToken, step1.demoOtp);
+        const res = await complete2FA(step1.tempToken, step1.demoOtp);
+        const role = res.user?.role || roleHint;
+        setTab(role === 'admin' ? 'admin' : 'dashboard');
       }
     } catch (err) {
       alert('Demo login failed: ' + err.message);
@@ -112,8 +114,8 @@ export default function Home({ setTab, onOpenAuth, onSelectListing, onConnectUse
               </button>
             </form>
 
-            {/* Demo Fast Login Banner */}
-            {!isAuthenticated && (
+            {/* Demo Fast Login Banner or Authenticated Welcome Banner */}
+            {!isAuthenticated ? (
               <div className="pt-4 max-w-3xl mx-auto">
                 <div className="p-3.5 bg-slate-900 text-slate-200 rounded-2xl shadow-md border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-2 text-left">
@@ -126,33 +128,52 @@ export default function Home({ setTab, onOpenAuth, onSelectListing, onConnectUse
                   <div className="flex flex-wrap items-center gap-1.5">
                     <button
                       disabled={quickLoginLoading}
-                      onClick={() => handleDemoLogin('admin@university.edu', 'AdminPassword123!')}
+                      onClick={() => handleDemoLogin('admin@university.edu', 'AdminPassword123!', 'admin')}
                       className="px-2.5 py-1 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-bold font-mono transition"
                     >
                       Admin
                     </button>
                     <button
                       disabled={quickLoginLoading}
-                      onClick={() => handleDemoLogin('alex@university.edu', 'StudentPass123!')}
+                      onClick={() => handleDemoLogin('alex@university.edu', 'StudentPass123!', 'student')}
                       className="px-2.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-bold font-mono transition"
                     >
                       Alex (CS)
                     </button>
                     <button
                       disabled={quickLoginLoading}
-                      onClick={() => handleDemoLogin('brianna@university.edu', 'StudentPass123!')}
+                      onClick={() => handleDemoLogin('brianna@university.edu', 'StudentPass123!', 'student')}
                       className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold font-mono transition"
                     >
                       Brianna (ME)
                     </button>
                     <button
                       disabled={quickLoginLoading}
-                      onClick={() => handleDemoLogin('marcus@university.edu', 'StudentPass123!')}
+                      onClick={() => handleDemoLogin('marcus@university.edu', 'StudentPass123!', 'student')}
                       className="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-bold font-mono transition"
                     >
                       Marcus (Bus)
                     </button>
                   </div>
+                </div>
+              </div>
+            ) : (
+              <div className="pt-4 max-w-3xl mx-auto">
+                <div className="p-3.5 bg-gradient-to-r from-brand-900 to-slate-900 text-slate-200 rounded-2xl shadow-md border border-brand-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-2 text-left">
+                    <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <div>
+                      <span className="font-bold text-white">Logged in as {user?.name}:</span>
+                      <p className="text-[11px] text-slate-300">Access your live housing matches, active listings, and encrypted chat.</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setTab(user?.role === 'admin' ? 'admin' : 'dashboard')}
+                    className="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 shrink-0"
+                  >
+                    <span>Go to My Dashboard</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             )}
@@ -277,18 +298,30 @@ export default function Home({ setTab, onOpenAuth, onSelectListing, onConnectUse
               Our algorithm compares sleeping hours, cleanliness habits, noise levels, study schedules, and pet policies to compute an exact compatibility percentage.
             </p>
             <div className="flex justify-center gap-3">
-              <button
-                onClick={() => onOpenAuth('register')}
-                className="px-6 py-3 rounded-xl bg-white text-brand-700 font-bold text-sm shadow-md hover:bg-sky-50 transition"
-              >
-                Sign Up (.edu)
-              </button>
-              <button
-                onClick={() => onOpenAuth('login')}
-                className="px-6 py-3 rounded-xl bg-brand-800/60 hover:bg-brand-800 text-white font-bold text-sm border border-white/20 transition"
-              >
-                Log In
-              </button>
+              {isAuthenticated ? (
+                <button
+                  onClick={() => setTab(user?.role === 'admin' ? 'admin' : 'dashboard')}
+                  className="px-6 py-3 rounded-xl bg-white text-brand-700 font-bold text-sm shadow-md hover:bg-sky-50 transition flex items-center gap-2"
+                >
+                  <span>Open My Dashboard</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => onOpenAuth('register')}
+                    className="px-6 py-3 rounded-xl bg-white text-brand-700 font-bold text-sm shadow-md hover:bg-sky-50 transition"
+                  >
+                    Sign Up (.edu)
+                  </button>
+                  <button
+                    onClick={() => onOpenAuth('login')}
+                    className="px-6 py-3 rounded-xl bg-brand-800/60 hover:bg-brand-800 text-white font-bold text-sm border border-white/20 transition"
+                  >
+                    Log In
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}

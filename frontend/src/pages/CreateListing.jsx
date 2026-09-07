@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PlusCircle, Upload, Check, AlertCircle, ArrowLeft, Image, ShieldCheck, Home } from "lucide-react";
+import { PlusCircle, Upload, Check, AlertCircle, ArrowLeft, Image, ShieldCheck, Home, CheckCircle2 } from 'lucide-react';
 import { api } from "../services/api";
 import CryptoBadge from "../components/CryptoBadge";
 

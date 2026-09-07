@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Home, Users, MessageSquare, ShieldCheck, Heart,
-  User, LogOut, PlusCircle, Settings, Menu, X, ChevronDown, CheckCircle2
+  User, LogOut, PlusCircle, Settings, Menu, X, ChevronDown, CheckCircle2,
+  LayoutDashboard
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import NotificationDropdown from './NotificationDropdown';
@@ -23,6 +24,7 @@ export default function Navbar({ currentTab, setTab, onOpenAuth }) {
   }, []);
 
   const navItems = [
+    ...(isAuthenticated ? [{ id: isAdmin ? 'admin' : 'dashboard', label: 'Dashboard', icon: LayoutDashboard, authOnly: true }] : []),
     { id: 'listings', label: 'Housing Listings', icon: Home },
     { id: 'roommates', label: 'Find Roommates', icon: Users },
     { id: 'connections', label: 'Requests', icon: CheckCircle2, authOnly: true },
@@ -35,7 +37,7 @@ export default function Navbar({ currentTab, setTab, onOpenAuth }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo & University Brand */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setTab('home')}>
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setTab(isAuthenticated ? (isAdmin ? 'admin' : 'dashboard') : 'home')}>
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-sky-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
               <Home className="w-5 h-5" />
             </div>
@@ -127,6 +129,13 @@ export default function Navbar({ currentTab, setTab, onOpenAuth }) {
                       </div>
 
                       <div className="py-1">
+                        <button
+                          onClick={() => { setTab(isAdmin ? 'admin' : 'dashboard'); setUserMenuOpen(false); }}
+                          className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-brand-700 bg-brand-50/60 hover:bg-brand-50 transition"
+                        >
+                          <LayoutDashboard className="w-4 h-4 text-brand-600" />
+                          {isAdmin ? 'Admin Console' : 'My Dashboard'}
+                        </button>
                         <button
                           onClick={() => { setTab('profile'); setUserMenuOpen(false); }}
                           className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition"

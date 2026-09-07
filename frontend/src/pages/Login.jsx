@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Lock, Mail, ShieldCheck, KeyRound, ArrowRight, AlertCircle, RefreshCw } from 'lucide-react';
+import { Lock, Mail, ShieldCheck, KeyRound, ArrowRight, AlertCircle, RefreshCw, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-export default function Login({ onClose, onSwitchToRegister, onEmailNeedsVerify }) {
+export default function Login({ onClose, onSwitchToRegister, onEmailNeedsVerify, onLoginSuccess }) {
   const { login, complete2FA } = useAuth();
 
   // Step 1 vs Step 2 (2FA OTP)
@@ -55,6 +55,9 @@ export default function Login({ onClose, onSwitchToRegister, onEmailNeedsVerify 
     try {
       const res = await complete2FA(tempToken, otp);
       if (res.success) {
+        if (onLoginSuccess) {
+          onLoginSuccess(res.user?.role || 'student');
+        }
         onClose();
       }
     } catch (err) {

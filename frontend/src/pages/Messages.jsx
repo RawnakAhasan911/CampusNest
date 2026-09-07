@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   MessageSquare, Send, ShieldCheck, Lock, Cpu, CheckCheck,
   User, RefreshCw, AlertCircle, Info, Sparkles
+  , CheckCircle2
 } from 'lucide-react';
 import { api } from '../services/api';
 import CryptoBadge from '../components/CryptoBadge';
@@ -172,9 +173,8 @@ export default function Messages({ initialPartnerId = null }) {
                   <button
                     key={conv.conversationId}
                     onClick={() => setSelectedPartner(conv.partner)}
-                    className={`w-full p-4 flex items-start gap-3 transition text-left ${
-                      isSelected ? 'bg-white shadow-sm border-l-4 border-brand-600' : 'hover:bg-slate-100/70'
-                    }`}
+                    className={`w-full p-4 flex items-start gap-3 transition text-left ${isSelected ? 'bg-white shadow-sm border-l-4 border-brand-600' : 'hover:bg-slate-100/70'
+                      }`}
                   >
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-sky-500 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
                       {conv.partner.name.charAt(0)}
@@ -251,17 +251,15 @@ export default function Messages({ initialPartnerId = null }) {
                         className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
                       >
                         <div
-                          className={`max-w-md p-3.5 rounded-2xl text-xs shadow-sm leading-relaxed ${
-                            isMe
+                          className={`max-w-md p-3.5 rounded-2xl text-xs shadow-sm leading-relaxed ${isMe
                               ? 'bg-brand-600 text-white rounded-br-none'
                               : 'bg-white text-slate-900 border border-slate-200 rounded-bl-none'
-                          }`}
+                            }`}
                         >
                           <p className="whitespace-pre-line">{msg.content}</p>
 
-                          <div className={`mt-1.5 flex items-center justify-between gap-3 text-[9px] font-mono ${
-                            isMe ? 'text-sky-200' : 'text-slate-400'
-                          }`}>
+                          <div className={`mt-1.5 flex items-center justify-between gap-3 text-[9px] font-mono ${isMe ? 'text-sky-200' : 'text-slate-400'
+                            }`}>
                             <span>
                               {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>

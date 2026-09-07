@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Home, ArrowLeft } from 'lucide-react';
+import { Heart, Home, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { api } from '../services/api';
 import ListingCard from '../components/ListingCard';
 import CryptoBadge from '../components/CryptoBadge';

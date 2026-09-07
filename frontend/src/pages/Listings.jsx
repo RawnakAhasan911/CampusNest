@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Search, SlidersHorizontal, Bed, Bath, DollarSign, Home,
-  RotateCcw, PlusCircle, Sparkles, Filter, Check
+  RotateCcw, PlusCircle, Sparkles, Filter, Check,
+  CheckCircle2
 } from 'lucide-react';
 import { api } from '../services/api';
 import ListingCard from '../components/ListingCard';
@@ -190,11 +191,10 @@ export default function Listings({ onSelectListing, setTab }) {
                   key={b}
                   type="button"
                   onClick={() => setBedrooms(b)}
-                  className={`py-1.5 rounded-lg text-xs font-semibold border transition ${
-                    bedrooms === b
+                  className={`py-1.5 rounded-lg text-xs font-semibold border transition ${bedrooms === b
                       ? 'bg-brand-600 text-white border-brand-600'
                       : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
-                  }`}
+                    }`}
                 >
                   {b === '' ? 'Any' : b === '3' ? '3+' : b}
                 </button>

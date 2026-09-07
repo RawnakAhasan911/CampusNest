@@ -7,6 +7,7 @@ import { CheckCircle2 } from 'lucide-react';
 
 // Pages
 import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import Listings from './pages/Listings';
 import ListingDetail from './pages/ListingDetail';
 import CreateListing from './pages/CreateListing';
@@ -84,6 +85,19 @@ function AppContent() {
             onConnectUser={() => setCurrentTab('roommates')}
             onViewProfile={handleViewProfile}
           />
+        )}
+
+        {currentTab === 'dashboard' && (
+          isAdmin ? (
+            <Admin />
+          ) : (
+            <Dashboard
+              setTab={setCurrentTab}
+              onSelectListing={handleSelectListing}
+              onStartChat={handleStartChat}
+              onViewProfile={handleViewProfile}
+            />
+          )
         )}
 
         {currentTab === 'listings' && (
@@ -168,6 +182,10 @@ function AppContent() {
         {authModalMode === 'login' ? (
           <Login
             onClose={() => setAuthModalOpen(false)}
+            onLoginSuccess={(role) => {
+              setCurrentTab(role === 'admin' ? 'admin' : 'dashboard');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             onSwitchToRegister={() => {
               setVerifyEmailData(null);
               setAuthModalMode('register');
